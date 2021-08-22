@@ -26,7 +26,15 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('generate:result')->everyThirtyMinutes()->timezone('Asia/Kolkata');
+//        $schedule->command('generate:result')->everyTwoMinutes()->timezone('Asia/Kolkata');
+
+        $schedule->command('generate:result')
+            ->cron('*/15 9-15 * * * ')
+            ->timezone('Asia/Kolkata');
+
+        $schedule->command('generate:result')
+            ->cron('*/20 16-21 * * * ')
+            ->timezone('Asia/Kolkata');
     }
 
     /**
