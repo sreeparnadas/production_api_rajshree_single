@@ -287,9 +287,9 @@ class DatabaseSeeder extends Seeder
         DrawMaster::insert([
 
             //15 min difference
-//            ['draw_name'=> 'Good morning','start_time'=>'08:30 ','end_time'=>'08:45','visible_time'=>'08:45 am','active'=>0],
-//            ['draw_name'=> 'Good morning','start_time'=>'08:45','end_time'=>'09:00','visible_time'=>'09:00 am','active'=>1],
-            ['draw_name'=> 'Good morning','start_time'=>'09:00','end_time'=>'09:15','visible_time'=>'09:15 am','active'=>1],
+
+            ['draw_name'=> 'Good morning','start_time'=>'12:00','end_time'=>'09:00','visible_time'=>'09:00 am','active'=>1],
+            ['draw_name'=> 'Good morning','start_time'=>'09:00','end_time'=>'09:15','visible_time'=>'09:15 am','active'=>0],
             ['draw_name'=> 'Good afternoon','start_time'=>'09:15','end_time'=>'09:30','visible_time'=>'09:30 am','active'=>0],
             ['draw_name'=> 'Good evening','start_time'=>'09:30','end_time'=>'09:45','visible_time'=>'09:45 am','active'=>0],
             ['draw_name'=> 'Lets play','start_time'=>'09:45','end_time'=>'10:00','visible_time'=>'10:00 am','active'=>0],
