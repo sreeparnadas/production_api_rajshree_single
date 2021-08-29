@@ -8,11 +8,7 @@ use App\Http\Resources\SingleNumbers;
 
 class SingleNumberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $result =  SingleNumber::orderBy('single_order')->get();

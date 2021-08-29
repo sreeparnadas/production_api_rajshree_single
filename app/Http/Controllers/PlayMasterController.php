@@ -17,19 +17,25 @@ class PlayMasterController extends Controller
     {
         $requestedData = (object)$request->json()->all();
         $playMasterId = $requestedData->play_master_id;
-        $playMaster = new PlayMaster();
-        $playMaster = PlayMaster::find($playMasterId);
-        $playMaster->is_cancelled = 1;
-        $playMaster->update();
 
-        $data = DB::select("select round(sum(play_details.quantity * play_details.mrp)) as total from play_details where play_master_id = ?",[$playMasterId])[0]->total;
+        $data = PlayMaster::select()->where('id',$playMasterId)->where('is_cancelable',1);
+        if($data) {
+            $playMaster = new PlayMaster();
+            $playMaster = PlayMaster::find($playMasterId);
+            $playMaster->is_cancelled = 1;
+            $playMaster->update();
+
+            $data = DB::select("select round(sum(play_details.quantity * play_details.mrp)) as total from play_details where play_master_id = ?", [$playMasterId])[0]->total;
 //
-        $user = new User();
-        $user = User::find($playMaster->user_id);
-        $user->closing_balance += $data;
-        $user->update();
+            $user = new User();
+            $user = User::find($playMaster->user_id);
+            $user->closing_balance += $data;
+            $user->update();
 
-        return response()->json(['success' => 1, 'data' => $playMaster, 'id'=>$playMaster->id, 'point'=>$user->closing_balance], 200);
+            return response()->json(['success' => 1, 'data' => $playMaster, 'id' => $playMaster->id, 'point' => $user->closing_balance], 200);
+        }else{
+            return response()->json(['success' => 0, 'data' => '', 'id' => '', 'point' => ''], 200);
+        }
     }
 
     public function claimPrize(Request $request){

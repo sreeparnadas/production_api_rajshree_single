@@ -20,8 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="46d97cff-c6cb-436f-8cf9-75f19341b347" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PlayMasterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PlayMasterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SingleNumberController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SingleNumberController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +35,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -186,6 +188,17 @@
       <workItem from="1629440591474" duration="2699000" />
       <workItem from="1629465318265" duration="2505000" />
       <workItem from="1629477615037" duration="1487000" />
+      <workItem from="1629890426854" duration="1473000" />
+      <workItem from="1630034452905" duration="1199000" />
+      <workItem from="1630038279594" duration="1168000" />
+      <workItem from="1630041438138" duration="1202000" />
+      <workItem from="1630059070458" duration="643000" />
+      <workItem from="1630068322292" duration="1207000" />
+      <workItem from="1630166447154" duration="1480000" />
+      <workItem from="1630202161784" duration="667000" />
+      <workItem from="1630217146347" duration="785000" />
+      <workItem from="1630234131349" duration="630000" />
+      <workItem from="1630246335561" duration="2305000" />
     </task>
     <servers />
   </component>
