@@ -22,7 +22,7 @@ class SingleNumbers extends JsonResource
         return [
             'singleNumberId' => $this->id,
             'singleNumber' => $this->single_number,
-            'numberCombinations' => NumberCombinationSimpleResource::collection($this->number_combinations)
+//            'numberCombinations' => NumberCombinationSimpleResource::collection($this->number_combinations)
         ];
     }
 }
