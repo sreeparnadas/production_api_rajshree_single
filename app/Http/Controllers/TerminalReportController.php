@@ -83,7 +83,11 @@ class TerminalReportController extends Controller
                 $tempntp += $tempData->total;
             }
             $detail = (object)$x;
-            $detail->prize_value = $newPrize;
+            if($newPrize>0 && $newData->is_claimed == 1){
+                $detail->prize_value = $newPrize;
+            }else{
+                $detail->prize_value = 0;
+            }
             $detail->ntp = $tempntp;
         }
 
