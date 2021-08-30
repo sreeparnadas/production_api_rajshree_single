@@ -5,6 +5,7 @@ namespace Database\Seeders;
 
 use App\Models\DrawMaster;
 use App\Models\GameType;
+use App\Models\Message;
 use App\Models\SingleNumber;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -845,5 +846,6 @@ class DatabaseSeeder extends Seeder
 
         NextGameDraw::create(['next_draw_id' => 2, 'last_draw_id' => 1]);
 
+        Message::create(['message' =>'test message']);
     }
 }

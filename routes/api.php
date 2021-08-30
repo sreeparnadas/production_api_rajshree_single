@@ -19,6 +19,7 @@ use App\Http\Controllers\CentralController;
 use App\Http\Controllers\NextGameDrawController;
 use App\Http\Controllers\TerminalController;
 use App\Http\Controllers\CPanelReportController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TerminalReportController;
 
 /*
@@ -189,6 +190,8 @@ Route::group(array('prefix' => 'dev'), function() {
     Route::put('terminal/resetPassword', [TerminalController::class, 'reset_terminal_password']);
 
     Route::put('cPanel/game/payout',[GameTypeController::class, 'update_payout']);
+
+    Route::put('message',[MessageController::class, 'updateMessage']);
 
 });
 
