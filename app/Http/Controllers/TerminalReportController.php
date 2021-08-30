@@ -77,17 +77,27 @@ class TerminalReportController extends Controller
             $newData = PlayMaster::whereRaw('date(created_at) >= ?', [$x->date])->where('user_id',$terminalId)->get();
             foreach ($newData as $y){
 //                $tempData = 0;
-                $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
+                $tempPrize = 0;
+//                $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
+
+                $tempPrize = $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
+                if($tempPrize>0 && $y->is_claimed == 1){
+                    $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
+                }else{
+                    $newPrize += 0;
+                }
+
                 $tempData = (PlayDetails::select(DB::raw("if(game_type_id = 1,(mrp*22)*quantity-(commission/100),mrp*quantity-(commission/100)) as total"))
                     ->where('play_master_id',$y->id)->distinct()->get())[0];
                 $tempntp += $tempData->total;
             }
             $detail = (object)$x;
-            if($newPrize>0 && $newData->is_claimed == 1){
+//            if($newPrize>0 && $newData->is_claimed == 1){
+//            if($newPrize>0){
                 $detail->prize_value = $newPrize;
-            }else{
-                $detail->prize_value = 0;
-            }
+//            }else{
+//                $detail->prize_value = 0;
+//            }
             $detail->ntp = $tempntp;
         }
 

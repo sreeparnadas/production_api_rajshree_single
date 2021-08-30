@@ -22,6 +22,7 @@
     <list default="true" id="46d97cff-c6cb-436f-8cf9-75f19341b347" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TerminalReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TerminalReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +198,8 @@
       <workItem from="1630217146347" duration="785000" />
       <workItem from="1630234131349" duration="630000" />
       <workItem from="1630246335561" duration="2398000" />
-      <workItem from="1630302122084" duration="599000" />
+      <workItem from="1630302122084" duration="1936000" />
+      <workItem from="1630324518850" duration="1198000" />
     </task>
     <servers />
   </component>
