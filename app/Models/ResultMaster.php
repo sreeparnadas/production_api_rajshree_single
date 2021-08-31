@@ -13,12 +13,13 @@ class ResultMaster extends Model
      * @var mixed
      */
     private $draw_master_id;
-    /**
-     * @var mixed
-     */
-    private $number_combination_id;
+
     /**
      * @var \Illuminate\Support\Carbon|mixed
      */
     private $game_date;
+    /**
+     * @var mixed
+     */
+    private $single_number_id;
 }

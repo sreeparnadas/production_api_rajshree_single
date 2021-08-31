@@ -17,9 +17,9 @@ class CreatePlayDetailsTable extends Migration
             $table->id();
             $table ->foreignId('play_master_id')->references('id')->on('play_masters')->onDelete('cascade');
             $table ->foreignId('game_type_id')->references('id')->on('game_types')->onDelete('cascade');
-            $table ->foreignId('number_combination_id')->references('id')->on('number_combinations')->onDelete('cascade');
+            $table ->foreignId('single_number_id')->references('id')->on('single_numbers')->onDelete('cascade');
             $table->integer('quantity')->nullable(false);
-            $table->decimal('mrp',5,4)->default(0);
+            $table->decimal('mrp',10,4)->default(0);
             $table->decimal('commission',10,2)->default(0);
             $table->decimal('payout',10,2)->default(0);
 

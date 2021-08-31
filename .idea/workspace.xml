@@ -21,7 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="46d97cff-c6cb-436f-8cf9-75f19341b347" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TerminalReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TerminalReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PlayController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PlayController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ResultMasterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ResultMasterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/PlayDetails.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/PlayDetails.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ResultMaster.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ResultMaster.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_15_154853_create_play_details_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_15_154853_create_play_details_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_20_170205_create_result_masters_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_20_170205_create_result_masters_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2021_05_20_180925_create_manual_results_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_05_20_180925_create_manual_results_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/DatabaseSeeder.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,6 +206,7 @@
       <workItem from="1630246335561" duration="2398000" />
       <workItem from="1630302122084" duration="1936000" />
       <workItem from="1630324518850" duration="1198000" />
+      <workItem from="1630383714059" duration="7550000" />
     </task>
     <servers />
   </component>
@@ -217,5 +224,11 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="510" y="135" key="refactoring.ChangeSignatureDialog" timestamp="1630389778610">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="510" y="135" key="refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728" timestamp="1630389778610" />
   </component>
 </project>

@@ -17,7 +17,7 @@ class CreateManualResultsTable extends Migration
             $table->id();
 
             $table->foreignId('draw_master_id')->references('id')->on('draw_masters')->onDelete('cascade');
-            $table->foreignId('number_combination_id')->references('id')->on('number_combinations')->onDelete('cascade');
+            $table->foreignId('single_number_id')->references('id')->on('single_numbers')->onDelete('cascade');
 
             $table->date('game_date');
 

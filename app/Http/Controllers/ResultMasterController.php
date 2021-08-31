@@ -7,6 +7,7 @@ use App\Models\ManualResult;
 use App\Models\NextGameDraw;
 use App\Models\NumberCombination;
 use App\Models\ResultMaster;
+use App\Models\SingleNumber;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -32,14 +33,13 @@ class ResultMasterController extends Controller
 
 
 
-            $data = DrawMaster::select('result_masters.game_date','draw_masters.end_time','number_combinations.triple_number',
+            $data = DrawMaster::select('result_masters.game_date','draw_masters.end_time',
                 'single_numbers.single_number')
                 ->leftJoin('result_masters', function ($join) use ($result_date) {
                     $join->on('draw_masters.id','=','result_masters.draw_master_id')
                         ->where('result_masters.game_date','=', $result_date);
                 })
-                ->leftJoin('number_combinations','result_masters.number_combination_id','number_combinations.id')
-                ->leftJoin('single_numbers','number_combinations.single_number_id','single_numbers.id')
+                ->leftJoin('single_numbers','result_masters.single_number_id','single_numbers.id')
                 ->get();
 
             /*Do Not delete*/
@@ -64,9 +64,8 @@ class ResultMasterController extends Controller
 
         $result_query =get_sql_with_bindings(ResultMaster::where('game_date', Carbon::today()));
         $data = DrawMaster::leftJoin(DB::raw("($result_query) as result_masters"),'draw_masters.id','=','result_masters.draw_master_id')
-            ->leftJoin('number_combinations','result_masters.number_combination_id','number_combinations.id')
-            ->leftJoin('single_numbers','number_combinations.single_number_id','single_numbers.id')
-            ->select('result_masters.game_date','draw_masters.end_time','number_combinations.triple_number','number_combinations.visible_triple_number','single_numbers.single_number')
+            ->leftJoin('single_numbers','result_masters.single_number_id','single_numbers.id')
+            ->select('result_masters.game_date','draw_masters.end_time','single_numbers.single_number')
             ->get();
         $result_array['result'] = $data;
 
@@ -81,14 +80,14 @@ class ResultMasterController extends Controller
         $manualResult = ManualResult::where('game_date',Carbon::today())
             ->where('draw_master_id',$draw_id)->first();
         if(!empty($manualResult)){
-            $number_combination_for_result = $manualResult->number_combination_id;
+            $single_number_for_result = $manualResult->single_number_id;
         }else{
-            $selectRandomResult = NumberCombination::all()->random(1)->first();
-            $number_combination_for_result = $selectRandomResult->id;
+            $selectRandomResult = SingleNumber::all()->random(1)->first();
+            $single_number_for_result = $selectRandomResult->id;
         }
         $resultMaster = new ResultMaster();
         $resultMaster->draw_master_id = $draw_id;
-        $resultMaster->number_combination_id = $number_combination_for_result;
+        $resultMaster->single_number_id = $single_number_for_result;
         $resultMaster->game_date = Carbon::today();
         $resultMaster->save();
         if(isset($resultMaster->id)){
@@ -102,9 +101,8 @@ class ResultMasterController extends Controller
 
         $result_query =get_sql_with_bindings(ResultMaster::where('game_date', Carbon::today()));
         $data = DrawMaster::leftJoin(DB::raw("($result_query) as result_masters"),'draw_masters.id','=','result_masters.draw_master_id')
-            ->leftJoin('number_combinations','result_masters.number_combination_id','number_combinations.id')
-            ->leftJoin('single_numbers','number_combinations.single_number_id','single_numbers.id')
-            ->select('result_masters.game_date','draw_masters.end_time','number_combinations.triple_number','number_combinations.visible_triple_number','single_numbers.single_number')
+            ->leftJoin('single_numbers','result_masters.single_number_id','single_numbers.id')
+            ->select('result_masters.game_date','draw_masters.end_time','single_numbers.single_number')
             ->orderBy('result_masters.draw_master_id','desc')
             ->whereNotNull('single_numbers.single_number')
             ->first();
