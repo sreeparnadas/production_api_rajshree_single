@@ -67,9 +67,18 @@ class PlayMasterController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function get_total_balance()
     {
-        //
+         $date= '2021-08-31';
+        $total = DB::select(DB::raw("select sum(play_details.quantity*play_details.mrp) as total_balance from play_details
+        inner join play_masters ON play_masters.id = play_details.play_master_id
+        where play_masters.draw_master_id=1  and date(play_details.created_at)= "."'".$date."'".""));
+
+        if(!empty($total)){
+            return $total[0]->total_balance;
+        }else{
+            return 0;
+        }
     }
 
     /**
@@ -83,5 +92,6 @@ class PlayMasterController extends Controller
         $play_details= PlayMaster::findOrFail($id)->play_details;
         return response()->json(['success'=>1,'data'=> PlayDetailsResource::collection($play_details)], 200,[],JSON_NUMERIC_CHECK);
     }
+
 
 }

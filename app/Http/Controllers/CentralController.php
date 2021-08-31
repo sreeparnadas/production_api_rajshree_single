@@ -7,16 +7,30 @@ use App\Models\NumberCombination;
 use Illuminate\Http\Request;
 use App\Models\NextGameDraw;
 use App\Models\DrawMaster;
-use App\Http\Controllers\ManualResultController;
+use App\Http\Controllers\PlayMasterController;
 use App\Http\Controllers\NumberCombinationController;
+use App\Models\GameType;
+use Carbon\Carbon;
 
 class CentralController extends Controller
 {
     public function createResult(){
 
+        $today= Carbon::today()->format('Y-m-d');
         $nextGameDrawObj = NextGameDraw::first();
         $nextDrawId = $nextGameDrawObj->next_draw_id;
         $lastDrawId = $nextGameDrawObj->last_draw_id;
+        $playMasterControllerObj = new PlayMasterController();
+        $totalSale = $playMasterControllerObj->get_total_balance();
+        // echo $totalSale;
+        $single = GameType::find(1);
+        // $totalPrice = floor((($totalSale*(($single->payout))/100))/$single->winning_price);
+
+        $payout = ($totalSale*($single->payout))/100;
+        $winningValue = floor($payout/$single->winning_price);
+        // $winningValue = floor(0.9154);
+        echo $winningValue;
+        exit;
 
         DrawMaster::query()->update(['active' => 0]);
         if(!empty($nextGameDrawObj)){

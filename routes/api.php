@@ -193,5 +193,7 @@ Route::group(array('prefix' => 'dev'), function() {
 
     Route::put('message',[MessageController::class, 'updateMessage']);
 
+    Route::get('balance', [PlayMasterController::class, 'get_total_balance']); 
+
 });
 
