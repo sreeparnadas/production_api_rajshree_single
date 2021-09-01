@@ -11,6 +11,7 @@ use App\Http\Controllers\PlayMasterController;
 use App\Http\Controllers\NumberCombinationController;
 use App\Models\GameType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CentralController extends Controller
 {
@@ -21,16 +22,38 @@ class CentralController extends Controller
         $nextDrawId = $nextGameDrawObj->next_draw_id;
         $lastDrawId = $nextGameDrawObj->last_draw_id;
         $playMasterControllerObj = new PlayMasterController();
-        $totalSale = $playMasterControllerObj->get_total_balance();
-        // echo $totalSale;
+
+        $totalSale = $playMasterControllerObj->get_total_sale($today,$lastDrawId);
         $single = GameType::find(1);
-        // $totalPrice = floor((($totalSale*(($single->payout))/100))/$single->winning_price);
 
         $payout = ($totalSale*($single->payout))/100;
-        $winningValue = floor($payout/$single->winning_price);
-        // $winningValue = floor(0.9154);
-        echo $winningValue;
-        exit;
+        $targetValue = floor($payout/$single->winning_price);
+
+        // result less than equal to target value
+        $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
+        inner join play_masters ON play_masters.id = play_details.play_master_id
+        inner join single_numbers ON single_numbers.id = play_details.single_number_id
+        where play_masters.draw_master_id = $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
+        group by single_numbers.single_number,single_numbers.id
+        having sum(play_details.quantity)<= $targetValue
+        order by rand() limit 1"));
+
+        if(empty($result)){
+            // empty value
+            $result = DB::select(DB::raw("select single_numbers.single_number,single_numbers.id as single_number_id from single_numbers
+            where id not in (select distinct single_number_id from play_details where date(created_at)="."'".$today."'".") order by rand() limit 1"));
+        }
+        if(empty($result)){
+            $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
+            inner join play_masters ON play_masters.id = play_details.play_master_id
+            inner join single_numbers ON single_numbers.id = play_details.single_number_id
+            where play_masters.draw_master_id= $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
+            group by single_numbers.single_number,single_numbers.id
+            having sum(play_details.quantity)<= $targetValue
+            order by rand() limit 1"));
+        }
+
+        $single_number_result_id = $result[0]->single_number_id;
 
         DrawMaster::query()->update(['active' => 0]);
         if(!empty($nextGameDrawObj)){
@@ -39,7 +62,7 @@ class CentralController extends Controller
 
 
         $resultMasterController = new ResultMasterController();
-        $jsonData = $resultMasterController->save_auto_result($lastDrawId);
+        $jsonData = $resultMasterController->save_auto_result($lastDrawId,$single_number_result_id);
 
         $resultCreatedObj = json_decode($jsonData->content(),true);
 

@@ -75,15 +75,21 @@ class ResultMasterController extends Controller
     }
 
 
-    public function save_auto_result($draw_id)
+    public function save_auto_result($draw_id,$single_number_result_id)
     {
+        //$single_number_result_id is the calculated result as per total sale
         $manualResult = ManualResult::where('game_date',Carbon::today())
             ->where('draw_master_id',$draw_id)->first();
+//        if(!empty($manualResult)){
+//            $single_number_for_result = $manualResult->single_number_id;
+//        }else{
+//            $selectRandomResult = SingleNumber::all()->random(1)->first();
+//            $single_number_for_result = $selectRandomResult->id;
+//        }
         if(!empty($manualResult)){
             $single_number_for_result = $manualResult->single_number_id;
         }else{
-            $selectRandomResult = SingleNumber::all()->random(1)->first();
-            $single_number_for_result = $selectRandomResult->id;
+            $single_number_for_result = $single_number_result_id;
         }
         $resultMaster = new ResultMaster();
         $resultMaster->draw_master_id = $draw_id;
