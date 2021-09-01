@@ -38,7 +38,7 @@ class ManualResultController extends Controller
                         }
                     }
                 ],
-            'numberCombinationId'=>'required|exists:number_combinations,id',
+//            'numberCombinationId'=>'required|exists:number_combinations,id',
         );
         $validator = Validator::make($request->all(),$rules);
 
@@ -52,7 +52,7 @@ class ManualResultController extends Controller
 
             $manualResult = new ManualResult();
             $manualResult->draw_master_id = $requestedData->drawMasterId;
-            $manualResult->number_combination_id = $requestedData->numberCombinationId;
+            $manualResult->single_number_id = $requestedData->numberCombinationId;
             $manualResult->game_date = Carbon::today();
             $manualResult->save();
 
