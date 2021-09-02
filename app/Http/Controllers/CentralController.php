@@ -40,9 +40,12 @@ class CentralController extends Controller
 
         if(empty($result)){
             // empty value
-            $result = DB::select(DB::raw("select single_numbers.single_number,single_numbers.id as single_number_id from single_numbers
-            where id not in (select distinct single_number_id from play_details where date(created_at)="."'".$today."'".") order by rand() limit 1"));
+            $result = DB::select(DB::raw("SELECT single_numbers.id as single_number_id FROM single_numbers WHERE id NOT IN(SELECT DISTINCT
+        play_details.single_number_id FROM play_details
+        INNER JOIN play_masters on play_details.play_master_id= play_masters.id
+        WHERE  DATE(play_masters.created_at) = "."'".$today."'"." and play_masters.draw_master_id = $lastDrawId) ORDER by rand() LIMIT 1"));
         }
+
         if(empty($result)){
             $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
             inner join play_masters ON play_masters.id = play_details.play_master_id
@@ -90,6 +93,71 @@ class CentralController extends Controller
             $nextGameDrawObj->next_draw_id = $nextDrawId;
             $nextGameDrawObj->last_draw_id = $lastDrawId;
             $nextGameDrawObj->save();
+
+            return response()->json(['success'=>1, 'message' => 'Result added'], 200);
+        }else{
+            return response()->json(['success'=>0, 'message' => 'Result not added'], 401);
+        }
+
+    }
+
+
+
+    public function createResultBydate(){
+
+        $today= '2021-09-01';
+        $nextGameDrawObj = NextGameDraw::first();
+        $nextDrawId = 46;
+        $lastDrawId = 45;
+        $playMasterControllerObj = new PlayMasterController();
+
+        $totalSale = $playMasterControllerObj->get_total_sale($today,$lastDrawId);
+        $single = GameType::find(1);
+
+        $payout = ($totalSale*($single->payout))/100;
+        $targetValue = floor($payout/$single->winning_price);
+
+        // result less than equal to target value
+        $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
+        inner join play_masters ON play_masters.id = play_details.play_master_id
+        inner join single_numbers ON single_numbers.id = play_details.single_number_id
+        where play_masters.draw_master_id = $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
+        group by single_numbers.single_number,single_numbers.id
+        having sum(play_details.quantity)<= $targetValue
+        order by rand() limit 1"));
+
+
+        if(empty($result)){
+            // empty value
+            $result = DB::select(DB::raw("SELECT * FROM single_numbers WHERE id NOT IN(SELECT DISTINCT
+        play_details.single_number_id FROM play_details
+        INNER JOIN play_masters on play_details.play_master_id= play_masters.id
+        WHERE  DATE(play_masters.created_at) = "."'".$today."'"." and play_masters.draw_master_id = $lastDrawId) ORDER by rand() LIMIT 1"));
+        }
+
+        if(empty($result)){
+            $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
+            inner join play_masters ON play_masters.id = play_details.play_master_id
+            inner join single_numbers ON single_numbers.id = play_details.single_number_id
+            where play_masters.draw_master_id= $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
+            group by single_numbers.single_number,single_numbers.id
+            having sum(play_details.quantity)<= $targetValue
+            order by rand() limit 1"));
+        }
+
+        $single_number_result_id = $result[0]->single_number_id;
+
+
+        $resultMasterController = new ResultMasterController();
+        $jsonData = $resultMasterController->save_auto_result($lastDrawId,$single_number_result_id);
+
+        $resultCreatedObj = json_decode($jsonData->content(),true);
+
+//        $actionId = 'score_update';
+//        $actionData = array('team1_score' => 46);
+//        event(new ActionEvent($actionId, $actionData));
+
+        if( !empty($resultCreatedObj) && $resultCreatedObj['success']==1){
 
             return response()->json(['success'=>1, 'message' => 'Result added'], 200);
         }else{
