@@ -43,7 +43,7 @@ class CPanelReportController extends Controller
         $end_date = $requestedData->endDate;
 
 
-        $x = $this->get_total_quantity_by_barcode(1);
+//        $x = $this->get_total_quantity_by_barcode(1);
 
         $data = PlayMaster::select('play_masters.id as play_master_id', DB::raw('substr(play_masters.barcode_number, 1, 8) as barcode_number')
             ,'draw_masters.visible_time as draw_time',
