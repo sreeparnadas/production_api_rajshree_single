@@ -38,6 +38,7 @@ class CentralController extends Controller
         having sum(play_details.quantity)<= $targetValue
         order by rand() limit 1"));
 
+        // select empty item for result
         if(empty($result)){
             // empty value
             $result = DB::select(DB::raw("SELECT single_numbers.id as single_number_id FROM single_numbers WHERE id NOT IN(SELECT DISTINCT
@@ -46,13 +47,15 @@ class CentralController extends Controller
         WHERE  DATE(play_masters.created_at) = "."'".$today."'"." and play_masters.draw_master_id = $lastDrawId) ORDER by rand() LIMIT 1"));
         }
 
+        // result greater than equal to target value
+
         if(empty($result)){
             $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
             inner join play_masters ON play_masters.id = play_details.play_master_id
             inner join single_numbers ON single_numbers.id = play_details.single_number_id
             where play_masters.draw_master_id= $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
             group by single_numbers.single_number,single_numbers.id
-            having sum(play_details.quantity)<= $targetValue
+            having sum(play_details.quantity)> $targetValue
             order by rand() limit 1"));
         }
 
@@ -103,12 +106,12 @@ class CentralController extends Controller
 
 
 
-    public function createResultBydate(){
+    public function createResultByDate(){
 
-        $today= '2021-09-01';
+        $today= '2021-09-02';
         $nextGameDrawObj = NextGameDraw::first();
-        $nextDrawId = 46;
-        $lastDrawId = 45;
+        $nextDrawId = 7;
+        $lastDrawId = 6;
         $playMasterControllerObj = new PlayMasterController();
 
         $totalSale = $playMasterControllerObj->get_total_sale($today,$lastDrawId);
@@ -116,6 +119,7 @@ class CentralController extends Controller
 
         $payout = ($totalSale*($single->payout))/100;
         $targetValue = floor($payout/$single->winning_price);
+        echo $targetValue;
 
         // result less than equal to target value
         $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
@@ -126,14 +130,17 @@ class CentralController extends Controller
         having sum(play_details.quantity)<= $targetValue
         order by rand() limit 1"));
 
-
+        echo 'Check1';
+        print_r($result);
         if(empty($result)){
             // empty value
-            $result = DB::select(DB::raw("SELECT * FROM single_numbers WHERE id NOT IN(SELECT DISTINCT
+            $result = DB::select(DB::raw("SELECT single_numbers.id as single_number_id FROM single_numbers WHERE id NOT IN(SELECT DISTINCT
         play_details.single_number_id FROM play_details
         INNER JOIN play_masters on play_details.play_master_id= play_masters.id
         WHERE  DATE(play_masters.created_at) = "."'".$today."'"." and play_masters.draw_master_id = $lastDrawId) ORDER by rand() LIMIT 1"));
         }
+        echo 'Check2';
+        print_r($result);
 
         if(empty($result)){
             $result = DB::select(DB::raw("select single_numbers.id as single_number_id,single_numbers.single_number,sum(play_details.quantity) as total_quantity  from play_details
@@ -141,9 +148,12 @@ class CentralController extends Controller
             inner join single_numbers ON single_numbers.id = play_details.single_number_id
             where play_masters.draw_master_id= $lastDrawId  and date(play_details.created_at)= "."'".$today."'"."
             group by single_numbers.single_number,single_numbers.id
-            having sum(play_details.quantity)<= $targetValue
+            having sum(play_details.quantity)>= $targetValue
             order by rand() limit 1"));
         }
+
+        echo 'Check3';
+        print_r($result);
 
         $single_number_result_id = $result[0]->single_number_id;
 

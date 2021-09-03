@@ -173,6 +173,7 @@ Route::group(array('prefix' => 'dev'), function() {
 
 
     Route::post('createAutoResult', [CentralController::class, 'createResult']);
+    Route::post('createResultByDate', [CentralController::class, 'createResultByDate']);
     Route::post('autoResult', [ResultMasterController::class, 'save_auto_result']);
 
     Route::get('nextDrawId', [NextGameDrawController::class, 'getNextDrawIdOnly']);
@@ -193,7 +194,7 @@ Route::group(array('prefix' => 'dev'), function() {
 
     Route::put('message',[MessageController::class, 'updateMessage']);
 
-    Route::get('balance', [PlayMasterController::class, 'get_total_balance']); 
+    Route::get('balance', [PlayMasterController::class, 'get_total_balance']);
 
 });
 
