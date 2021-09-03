@@ -22,6 +22,8 @@
     <list default="true" id="46d97cff-c6cb-436f-8cf9-75f19341b347" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../rajshree_single_angular/src/app/pages/terminal/terminal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../rajshree_single_angular/src/app/pages/terminal/terminal.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CPanelReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CPanelReportController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +211,8 @@
       <workItem from="1630525589454" duration="591000" />
       <workItem from="1630553366167" duration="2261000" />
       <workItem from="1630645048126" duration="304000" />
-      <workItem from="1630655949533" duration="2927000" />
+      <workItem from="1630655949533" duration="3518000" />
+      <workItem from="1630668404902" duration="3991000" />
     </task>
     <servers />
   </component>

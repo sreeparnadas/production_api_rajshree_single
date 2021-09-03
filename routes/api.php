@@ -188,6 +188,9 @@ Route::group(array('prefix' => 'dev'), function() {
     Route::post('terminal/barcodeReport',[TerminalReportController::class, 'barcode_wise_report_by_terminal']);
 
 
+    Route::post('testPrize',[CPanelReportController::class, 'get_total_amount_by_barcode']);
+
+
     Route::put('terminal/resetPassword', [TerminalController::class, 'reset_terminal_password']);
 
     Route::put('cPanel/game/payout',[GameTypeController::class, 'update_payout']);
