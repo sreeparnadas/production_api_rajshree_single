@@ -108,7 +108,7 @@ class CPanelReportController extends Controller
 
         $play_date = Carbon::parse($play_master->created_at)->format('Y-m-d');
         $result_master = ResultMaster::where('draw_master_id', $play_master->draw_master_id)->where('game_date',$play_date)->first();
-        $result_number_combination_id = !empty($result_master) ? $result_master->number_combination_id : null;
+        $result_number_combination_id = !empty($result_master) ? $result_master->single_number_id : null;
         $prize_value = 0;
         foreach ($play_game_ids as $game_id){
             if($game_id == 1){
