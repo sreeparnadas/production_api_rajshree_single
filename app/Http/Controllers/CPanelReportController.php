@@ -113,25 +113,25 @@ class CPanelReportController extends Controller
         foreach ($play_game_ids as $game_id){
             if($game_id == 1){
                 $singleGamePrize = PlayMaster::join('play_details','play_masters.id','play_details.play_master_id')
-                    ->join('number_combinations','play_details.single_number_id','number_combinations.id')
+                    ->join('single_numbers','play_details.single_number_id','single_numbers.id')
                     ->join('game_types','play_details.game_type_id','game_types.id')
                     ->select(DB::raw("max(play_details.quantity)* max(game_types.winning_price) as prize_value") )
                     ->where('play_masters.id',$play_master_id)
                     ->where('play_details.game_type_id',$game_id)
                     ->where('play_details.single_number_id',$result_number_combination_id)
-                    ->groupBy('number_combinations.single_number_id')
+                    ->groupBy('single_numbers.id')
                     ->first();
             }
-            if($game_id == 2){
-                $tripleGamePrize = PlayMaster::join('play_details','play_masters.id','play_details.play_master_id')
-                    ->join('number_combinations','play_details.single_number_id','number_combinations.id')
-                    ->join('game_types','play_details.game_type_id','game_types.id')
-                    ->select(DB::raw("play_details.quantity * game_types.winning_price as prize_value") )
-                    ->where('play_masters.id',$play_master_id)
-                    ->where('play_details.game_type_id',$game_id)
-                    ->where('play_details.single_number_id',$result_number_combination_id)
-                    ->first();
-            }
+//            if($game_id == 2){
+//                $tripleGamePrize = PlayMaster::join('play_details','play_masters.id','play_details.play_master_id')
+//                    ->join('number_combinations','play_details.single_number_id','number_combinations.id')
+//                    ->join('game_types','play_details.game_type_id','game_types.id')
+//                    ->select(DB::raw("play_details.quantity * game_types.winning_price as prize_value") )
+//                    ->where('play_masters.id',$play_master_id)
+//                    ->where('play_details.game_type_id',$game_id)
+//                    ->where('play_details.single_number_id',$result_number_combination_id)
+//                    ->first();
+//            }
         }
 //        return ['single' => $singleGamePrize];
 
