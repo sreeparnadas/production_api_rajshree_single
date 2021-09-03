@@ -79,8 +79,8 @@ class CPanelReportController extends Controller
         $data['barcode'] = Str::substr($playMaster->barcode_number,0,8);
         $singleGameData = PlayDetails::select(DB::raw('max(single_numbers.single_number) as single_number')
             ,DB::raw('max(play_details.quantity) as quantity'))
-            ->join('number_combinations','play_details.single_number_id','number_combinations.id')
-            ->join('single_numbers','number_combinations.single_number_id','single_numbers.id')
+//            ->join('number_combinations','play_details.single_number_id','number_combinations.id')
+            ->join('single_numbers','play_details.single_number_id','single_numbers.id')
             ->where('play_details.play_master_id',$play_master_id)
             ->where('play_details.game_type_id',1)
             ->groupBy('single_numbers.id')
@@ -89,15 +89,15 @@ class CPanelReportController extends Controller
 
         $data['single'] = $singleGameData;
 
-        $tripleGameData = PlayDetails::select('number_combinations.visible_triple_number','single_numbers.single_number'
-            ,'play_details.quantity')
-            ->join('number_combinations','play_details.single_number_id','number_combinations.id')
-            ->join('single_numbers','number_combinations.single_number_id','single_numbers.id')
-            ->where('play_details.play_master_id',$play_master_id)
-            ->where('play_details.game_type_id',2)
-            ->orderBy('single_numbers.single_order')
-            ->get();
-        $data['triple'] = $tripleGameData;
+//        $tripleGameData = PlayDetails::select('number_combinations.visible_triple_number','single_numbers.single_number'
+//            ,'play_details.quantity')
+////            ->join('number_combinations','play_details.single_number_id','number_combinations.id')
+//            ->join('single_numbers','play_details.single_number_id','single_numbers.id')
+//            ->where('play_details.play_master_id',$play_master_id)
+//            ->where('play_details.game_type_id',2)
+//            ->orderBy('single_numbers.single_order')
+//            ->get();
+//        $data['triple'] = $tripleGameData;
         return response()->json(['success'=> 1, 'data' => $data], 200);
 
     }
