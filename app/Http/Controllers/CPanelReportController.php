@@ -212,7 +212,8 @@ class CPanelReportController extends Controller
 //        if(!empty($tripleGameTotalAmount)){
 //            $total_amount+= $tripleGameTotalAmount->total_amount;
 //        }
-        return $total_amount;
+//        return $total_amount;
+        return number_format($total_amount,2);
     }
 
     public function customer_sale_report(){
