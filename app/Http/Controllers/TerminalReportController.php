@@ -77,9 +77,9 @@ class TerminalReportController extends Controller
             $newData = PlayMaster::whereRaw('date(created_at) >= ?', [$x->date])->where('user_id',$terminalId)->get();
             foreach ($newData as $y){
 //                $tempData = 0;
-                $tempPrize = 0;
 //                $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
 
+                $tempPrize = 0;
                 $tempPrize = $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
                 if($tempPrize>0 && $y->is_claimed == 1){
                     $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);

@@ -290,7 +290,14 @@ class CPanelReportController extends Controller
             $newData = PlayMaster::where('user_id',$x->user_id)->get();
             foreach($newData as $y) {
                 $tempData = 0;
-                $newPrize += $this->get_prize_value_by_barcode($y->id);
+//                $newPrize += $this->get_prize_value_by_barcode($y->id);
+                $tempPrize = $this->get_prize_value_by_barcode($y->id);
+                if($tempPrize>0 && $y->is_claimed == 1){
+                    $newPrize += $this->get_prize_value_by_barcode($y->id);
+                }else{
+                    $newPrize += 0;
+                }
+
                 $tempData = (PlayDetails::select(DB::raw("if(game_type_id = 1,(mrp*22)*quantity-(commission/100),mrp*quantity-(commission/100)) as total"))
                     ->where('play_master_id',$y->id)->distinct()->get())[0];
                 $tempntp += $tempData->total;
