@@ -69,7 +69,8 @@ class TerminalReportController extends Controller
         where play_masters.is_cancelled=0 and date(play_masters.created_at) >= ? and date(play_masters.created_at) <= ? and user_id = ?
         group by stockist_to_terminals.stockist_id, play_masters.user_id,users.user_name,play_details.game_type_id,users.email,play_masters.created_at) as table1
         group by terminal_pin, date(created_at), user_name, terminal_pin, user_id, stockist_id) as table1
-        left join users on table1.stockist_id = users.id",[$start_date,$end_date,$terminalId]);
+        left join users on table1.stockist_id = users.id
+        order by table1.`date` desc",[$start_date,$end_date,$terminalId]);
 
         foreach($data as $x) {
             $newPrize = 0;
