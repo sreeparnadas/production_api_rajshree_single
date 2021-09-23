@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\NumberCombination;
+use App\Models\PlayMaster;
 use Illuminate\Http\Request;
 use App\Models\NextGameDraw;
 use App\Models\DrawMaster;
@@ -22,6 +23,9 @@ class CentralController extends Controller
         $nextDrawId = $nextGameDrawObj->next_draw_id;
         $lastDrawId = $nextGameDrawObj->last_draw_id;
         $playMasterControllerObj = new PlayMasterController();
+
+        $playMasterObj = new TerminalReportController();
+        $playMasterObj->updateCancellation();
 
         $totalSale = $playMasterControllerObj->get_total_sale($today,$lastDrawId);
         $single = GameType::find(1);
