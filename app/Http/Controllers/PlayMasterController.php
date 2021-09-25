@@ -18,7 +18,7 @@ class PlayMasterController extends Controller
         $requestedData = (object)$request->json()->all();
         $playMasterId = $requestedData->play_master_id;
 
-        $data = PlayMaster::select()->where('id',$playMasterId)->where('is_cancelable',1);
+        $data = PlayMaster::select()->where('id',$playMasterId)->where('is_cancelable',1)->first();
         if($data) {
             $playMaster = new PlayMaster();
             $playMaster = PlayMaster::find($playMasterId);
@@ -36,6 +36,7 @@ class PlayMasterController extends Controller
         }else{
             return response()->json(['success' => 0, 'data' => '', 'id' => '', 'point' => ''], 200);
         }
+//        return response()->json(['success' => 0, 'data' => $data], 200);
     }
 
     public function claimPrize(Request $request){
