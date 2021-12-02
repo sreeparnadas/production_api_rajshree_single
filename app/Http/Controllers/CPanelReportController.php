@@ -256,41 +256,88 @@ class CPanelReportController extends Controller
         $end_date = $requestedData->endDate;
 
 
-        $data = DB::select("select table1.play_master_id, table1.terminal_pin, table1.user_name, table1.user_id, table1.stockist_id, table1.total, table1.commission, users.user_name as stokiest_name from (select max(play_master_id) as play_master_id,terminal_pin,user_name,user_id,stockist_id,
-        sum(total) as total,round(sum(commission),2) as commission from (
-        select max(play_masters.id) as play_master_id,users.user_name,users.email as terminal_pin,
+//         $data = DB::select("select table1.play_master_id, table1.terminal_pin, table1.user_name, table1.user_id, table1.stockist_id, table1.total, table1.commission, users.user_name as stokiest_name from (select max(play_master_id) as play_master_id,terminal_pin,user_name,user_id,stockist_id,
+//         sum(total) as total,round(sum(commission),2) as commission from (
+//         select max(play_masters.id) as play_master_id,users.user_name,users.email as terminal_pin,
+//         round(sum(play_details.quantity * play_details.mrp)) as total,
+//         sum(play_details.quantity * play_details.mrp)* (max(play_details.commission)/100) as commission,
+//         play_masters.user_id, stockist_to_terminals.stockist_id
+//         FROM play_masters
+//         inner join play_details on play_details.play_master_id = play_masters.id
+//         inner join game_types ON game_types.id = play_details.game_type_id
+//         inner join users ON users.id = play_masters.user_id
+//         left join stockist_to_terminals on play_masters.user_id = stockist_to_terminals.terminal_id
+//         where play_masters.is_cancelled=0 and date(play_masters.created_at) >= ? and date(play_masters.created_at) <= ?
+//         group by stockist_to_terminals.stockist_id, play_masters.user_id,users.user_name,play_details.game_type_id,users.email) as table1 group by user_name,user_id,terminal_pin,stockist_id) as table1
+//         left join users on table1.stockist_id = users.id ",[$start_date,$end_date]);
+
+// //        $data = DB::select("select max(play_master_id) as play_master_id,terminal_pin,user_name,user_id,
+// //        sum(total) as total,round(sum(commission),2) as commission from (
+// //        select max(play_masters.id) as play_master_id,users.user_name,users.email as terminal_pin,
+// //        round(sum(play_details.quantity * play_details.mrp)) as total,
+// //        sum(play_details.quantity * play_details.mrp)* (max(play_details.commission)/100) as commission,
+// //        play_masters.user_id
+// //        FROM play_masters
+// //        inner join play_details on play_details.play_master_id = play_masters.id
+// //        inner join game_types ON game_types.id = play_details.game_type_id
+// //        inner join users ON users.id = play_masters.user_id
+// //        where play_masters.is_cancelled=0 and date(play_masters.created_at) >= ? and date(play_masters.created_at) <= ?
+// //        group by play_masters.user_id,users.user_name,play_details.game_type_id,users.email) as table1 group by user_name,user_id,terminal_pin",[$start_date,$end_date]);
+
+//         foreach($data as $x){
+//             $newPrize = 0;
+//             $tempntp = 0;
+//             $newData = PlayMaster::where('user_id',$x->user_id)->get();
+//             foreach($newData as $y) {
+//                 $tempData = 0;
+// //                $newPrize += $this->get_prize_value_by_barcode($y->id);
+//                 $tempPrize = $this->get_prize_value_by_barcode($y->id);
+//                 if($tempPrize>0 && $y->is_claimed == 1){
+//                     $newPrize += $this->get_prize_value_by_barcode($y->id);
+//                 }else{
+//                     $newPrize += 0;
+//                 }
+
+//                 $tempData = (PlayDetails::select(DB::raw("if(game_type_id = 1,(mrp*22)*quantity-(commission/100),mrp*quantity-(commission/100)) as total"))
+//                     ->where('play_master_id',$y->id)->distinct()->get())[0];
+//                 $tempntp += $tempData->total;
+//             }
+//             $detail = (object)$x;
+//             $detail->prize_value = $newPrize;
+//             $detail->ntp = $tempntp;
+//         }
+//         return response()->json(['success'=> 1, 'data' => $data], 200);
+
+
+
+// $cPanelRepotControllerObj = new CPanelReportController();
+
+
+        $data = DB::select("select round(table1.commission,2) as commission, table1.total, table1.user_name, users.user_name as stokiest_name, table1.terminal_pin, table1.user_id, table1.stockist_id,
+        table1.`date` from (select sum(commission) as commission, sum(total) as total, user_name, terminal_pin, user_id, stockist_id, date(created_at) as date from (select max(play_masters.id) as play_master_id,users.user_name,users.email as terminal_pin,
         round(sum(play_details.quantity * play_details.mrp)) as total,
         sum(play_details.quantity * play_details.mrp)* (max(play_details.commission)/100) as commission,
-        play_masters.user_id, stockist_to_terminals.stockist_id
+        play_masters.user_id, stockist_to_terminals.stockist_id,play_masters.created_at
         FROM play_masters
         inner join play_details on play_details.play_master_id = play_masters.id
         inner join game_types ON game_types.id = play_details.game_type_id
         inner join users ON users.id = play_masters.user_id
         left join stockist_to_terminals on play_masters.user_id = stockist_to_terminals.terminal_id
         where play_masters.is_cancelled=0 and date(play_masters.created_at) >= ? and date(play_masters.created_at) <= ?
-        group by stockist_to_terminals.stockist_id, play_masters.user_id,users.user_name,play_details.game_type_id,users.email) as table1 group by user_name,user_id,terminal_pin,stockist_id) as table1
-        left join users on table1.stockist_id = users.id ",[$start_date,$end_date]);
+        group by stockist_to_terminals.stockist_id, play_masters.user_id,users.user_name,play_details.game_type_id,users.email,play_masters.created_at) as table1
+        group by terminal_pin, date(created_at), user_name, terminal_pin, user_id, stockist_id) as table1
+        left join users on table1.stockist_id = users.id
+        order by table1.`date` desc",[$start_date,$end_date]);
 
-//        $data = DB::select("select max(play_master_id) as play_master_id,terminal_pin,user_name,user_id,
-//        sum(total) as total,round(sum(commission),2) as commission from (
-//        select max(play_masters.id) as play_master_id,users.user_name,users.email as terminal_pin,
-//        round(sum(play_details.quantity * play_details.mrp)) as total,
-//        sum(play_details.quantity * play_details.mrp)* (max(play_details.commission)/100) as commission,
-//        play_masters.user_id
-//        FROM play_masters
-//        inner join play_details on play_details.play_master_id = play_masters.id
-//        inner join game_types ON game_types.id = play_details.game_type_id
-//        inner join users ON users.id = play_masters.user_id
-//        where play_masters.is_cancelled=0 and date(play_masters.created_at) >= ? and date(play_masters.created_at) <= ?
-//        group by play_masters.user_id,users.user_name,play_details.game_type_id,users.email) as table1 group by user_name,user_id,terminal_pin",[$start_date,$end_date]);
-
-        foreach($data as $x){
+        foreach($data as $x) {
             $newPrize = 0;
             $tempntp = 0;
-            $newData = PlayMaster::where('user_id',$x->user_id)->get();
-            foreach($newData as $y) {
-                $tempData = 0;
-//                $newPrize += $this->get_prize_value_by_barcode($y->id);
+            $newData = PlayMaster::whereRaw('date(created_at) = ?', [$x->date])->where('user_id',$x->user_id)->get();
+            foreach ($newData as $y){
+//                $tempData = 0;
+//                $newPrize += $cPanelRepotControllerObj->get_prize_value_by_barcode($y->id);
+
+                $tempPrize = 0;
                 $tempPrize = $this->get_prize_value_by_barcode($y->id);
                 if($tempPrize>0 && $y->is_claimed == 1){
                     $newPrize += $this->get_prize_value_by_barcode($y->id);
@@ -306,7 +353,14 @@ class CPanelReportController extends Controller
             $detail->prize_value = $newPrize;
             $detail->ntp = $tempntp;
         }
-        return response()->json(['success'=> 1, 'data' => $data], 200);
+
+
+        return response()->json(['success' => 1, 'data' => $data, JSON_NUMERIC_CHECK], 200);
+
+
+
+
+
 
 
 
