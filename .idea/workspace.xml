@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="46d97cff-c6cb-436f-8cf9-75f19341b347" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$" beforeDir="false" afterPath="$PROJECT_DIR$" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +167,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../smart_lotto/smart_lotto_api" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -231,7 +230,10 @@
       <workItem from="1632500808989" duration="162000" />
       <workItem from="1632503850803" duration="147000" />
       <workItem from="1632547221758" duration="1488000" />
-      <workItem from="1638445427483" duration="1576000" />
+      <workItem from="1638445427483" duration="2140000" />
+      <workItem from="1638460035724" duration="83000" />
+      <workItem from="1639657454268" duration="981000" />
+      <workItem from="1639932120382" duration="25000" />
     </task>
     <servers />
   </component>
@@ -249,15 +251,5 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="59" y="205" key="#SQL_Dialects" timestamp="1630474640922">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="59" y="205" key="#SQL_Dialects/0.0.1366.728@0.0.1366.728" timestamp="1630474640922" />
-    <state x="510" y="135" key="refactoring.ChangeSignatureDialog" timestamp="1630389778610">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="510" y="135" key="refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728" timestamp="1630389778610" />
   </component>
 </project>
