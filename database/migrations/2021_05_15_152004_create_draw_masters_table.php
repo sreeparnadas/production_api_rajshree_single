@@ -19,6 +19,7 @@ class CreateDrawMastersTable extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->integer('time_diff');
+            $table ->integer('game_id');
             $table->string('visible_time',20)->nullable(true);
             $table->tinyInteger('active')->default(0);
             $table->timestamps();
